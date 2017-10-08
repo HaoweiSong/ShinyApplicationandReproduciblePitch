@@ -1,0 +1,52 @@
+ShinyApplicationandReproducible Pitch
+========================================================
+author:Haowei Song
+date:10/7/2017
+autosize: true
+
+Introduction and Table of Content
+========================================================
+This data product was using faithful data set. A linear model was built which represents the relation of eruption and waiting time. The established linear model was used predict the eruption time from user defined waiting time.
+
+- Page 3: User interface, Ui.R
+- Page 4: Regression Model and Prediction, Server.R
+- Page 5: Regression and Prediction Plot
+
+User interface: ui.R
+========================================================
+In ui.R, a sliderbar control was used to allow user choose a waiting time between 45 minutes to 85 minutes. the default waiting time was set as 80 minutes.
+
+            sliderInput("waiting",
+                        "Waiting time (min)",
+                        min = 45,
+                        max = 95,
+                        value = 80)
+
+Regression Model and Prediction, Server.R
+========================================================
+- A linear model was constructed by the fucnton "lm"
+
+    lm1 <- lm(eruptions ~ waiting,data=faithful)
+
+- The raw data and regression line was ploted together
+
+        plot(faithful$waiting,faithful$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
+        abline(lm1, col="green",lwd=4)
+
+- Prediction was done by calculating from the coefficients
+
+        y<-coef(lm1)[1] + coef(lm1)[2]*x
+- The prediction result was drawn on the lenear regression fit line and displayed in a text ouput
+
+
+Regression and Prediction Plot
+========================================================
+```{r, echo=FALSE}
+    data(faithful); set.seed(333)
+    lm1 <- lm(eruptions ~ waiting,data=faithful)
+    plot(faithful$waiting,faithful$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
+    abline(lm1, col="green",lwd=4)
+    x<-80
+    y<-coef(lm1)[1] + coef(lm1)[2]*x
+    abline(v=x);abline(h=y)
+```
